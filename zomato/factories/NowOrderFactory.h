@@ -5,9 +5,10 @@
 #include<TimeUtils.h>
 #include<PickupOrder.h>
 #include<DeliveryOrder.h>
+#include<OrderFactory.h>
 using namespace std;
 
-class NowOrderFactory : public Order 
+class NowOrderFactory : public OrderFactory 
 {
     public:
         Order* createOrder(User* user, Cart* cart, Restaurant* restaurant, const vector<MenuItem>&menuItems, 

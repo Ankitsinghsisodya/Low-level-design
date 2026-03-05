@@ -45,4 +45,72 @@ public:
         restaurantManager->addRestaurant(restaurant2);
         restaurantManager->addRestaurant(restaurant3);
     }
+
+    vector<Restaurant*> searchRestaurants(const string& location) {
+        return RestaurantManager::getInstance()->searchByLocation(location);
+    }
+
+     void selectRestaurant(User* user, Restaurant* restaurant) {
+        Cart* cart = user->getCart();
+        cart->setRestaurants(restaurant);
+    }
+
+    void addToCart(User* user, const int itemCode) {
+        Restaurant* restaurant = user->getCart()->getRestaurant();
+        if (!restaurant) {
+            cout << "Please select a restaurant first." << endl;
+            return;
+        }
+        for (const auto& item : restaurant->getMenuItems()) {
+            if (item.getCode() == itemCode) {
+                user->getCart()->addItem(item);
+                break;
+            }
+        }
+    }
+
+    Order* checkoutNow(User* user, const string& orderType, PaymentStrategy* paymentStrategy) {
+        return checkout(user, orderType, paymentStrategy, new NowOrderFactory());
+    }
+
+    Order* checkoutScheduled(User* user, const string& orderType, PaymentStrategy* paymentStrategy, const string& scheduleTime) {
+        return checkout(user, orderType, paymentStrategy, new ScheduledOrderFactory(scheduleTime));
+    }
+
+    Order* checkout(User* user, const string& orderType, 
+        PaymentStrategy* paymentStrategy, OrderFactory* orderFactory) {
+        if (user->getCart()->isEmpty())
+        return nullptr;
+
+        Cart* userCart = user->getCart();
+        Restaurant* orderedRestaurant = userCart->getRestaurant();
+        vector<MenuItem> itemsOrdered = userCart->getItems();
+        double totalCost = userCart->getTotalCost();
+
+        Order* order = orderFactory->createOrder(user, userCart, orderedRestaurant, itemsOrdered, paymentStrategy, totalCost, orderType);
+        OrderManager::getInstance()->addOrder(order);
+        return order;
+    }
+
+    void payForOrder(User* user, Order* order) {
+        bool isPaymentSuccess = order->processPayment();
+
+        // clear user cart if payment is successful.
+        if(isPaymentSuccess) {
+            NotificatoinService* notification = new NotificatoinService();
+            notification->notify(order);
+            user->getCart()->clear();
+        }  
+    }
+
+    void printUserCart(User* user) {
+        cout << "Items in cart:" << endl;
+        cout << "------------------------------------" << endl;
+        for (const auto& item : user->getCart()->getItems()) {
+            cout << item.getCode() << " : " << item.getItemName() << " : ₹" << item.getPrice() << endl;
+        }
+        cout << "------------------------------------" << endl;
+        cout << "Grand total : ₹" << user->getCart()->getTotalCost() << endl;
+    }
+
 };

@@ -16,7 +16,10 @@ public:
         this->price = price;
         this->itemName = itemName;
     }
-
+    int getCode() const
+    {
+        return menuId;
+    }
     void setMenuId(int menuId)
     {
         this->menuId = menuId;
