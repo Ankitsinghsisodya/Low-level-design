@@ -4,6 +4,7 @@
 #include "IObserver.h"
 #include "NotificationObservable.h"
 #include "../strategies/INotificationStrategy.h"
+#include<NotificationService.h>
 using namespace std;
 
 class NotificationEngine : public IObserver
@@ -13,6 +14,11 @@ private:
     vector<INotificationStrategy *> notificationStrategies;
 
 public:
+    NotificationEngine()
+    {
+        this->notificationObservable = NotificationService::getInstance()->getObservable();
+        notificationObservable->addObserver(this);
+    }
     NotificationEngine(NotificationObservable *observable) : notificationObservable(observable) {}
 
     void addNotificationStrategy(INotificationStrategy *ns)

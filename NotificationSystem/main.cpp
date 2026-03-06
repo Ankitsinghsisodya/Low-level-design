@@ -11,10 +11,9 @@
 int main()
 {
     NotificationService *notificationService = NotificationService::getInstance();
-    NotificationObservable *notificationObservable = notificationService->getObservable();
 
-    Logger *logger = new Logger(notificationObservable);
-    NotificationEngine *notificationEngine = new NotificationEngine(notificationObservable);
+    Logger *logger = new Logger();
+    NotificationEngine *notificationEngine = new NotificationEngine();
 
     notificationEngine->addNotificationStrategy(new EmailStrategy("ankitsingh24012005@gmail.com"));
     notificationEngine->addNotificationStrategy(new SMSStrategy("7667144864"));
