@@ -556,7 +556,7 @@ classDiagram
         +mushrooms() Builder
         +build() Pizza
     }
-    Pizza +-- Builder
+    Pizza *-- Builder
 ```
 
 ```java
