@@ -12,9 +12,9 @@ int main()
 {
     NotificationService *notificationService = NotificationService::getInstance();
 
-    Logger *logger = new Logger();
     NotificationEngine *notificationEngine = new NotificationEngine();
-
+    Logger *logger = new Logger();
+    NotificationObservable* notificationObservable = notificationService->getObservable();
     notificationEngine->addNotificationStrategy(new EmailStrategy("ankitsingh24012005@gmail.com"));
     notificationEngine->addNotificationStrategy(new SMSStrategy("7667144864"));
     notificationEngine->addNotificationStrategy(new PopUpStrategy());

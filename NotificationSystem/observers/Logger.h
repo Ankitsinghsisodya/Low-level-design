@@ -2,7 +2,7 @@
 #include <iostream>
 #include "IObserver.h"
 #include "NotificationObservable.h"
-#include<NotificationService.h>
+#include "../services/NotificationService.h"
 using namespace std;
 
 class Logger : public IObserver
