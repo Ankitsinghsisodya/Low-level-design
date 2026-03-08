@@ -14,5 +14,5 @@ class PlayStrategy
         virtual bool hasNext() = 0;
         virtual Song* previous() = 0;
         virtual bool hasPrevious() = 0;
-        virtual void addToNext(Song* song) = 0;
+        virtual void addToNext(Song* song) {}
 };
