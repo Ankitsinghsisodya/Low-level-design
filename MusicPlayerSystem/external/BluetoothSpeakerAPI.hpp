@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class BlutetoothSpeaker
+class BlutetoothSpeakerAPI
 {
     public:
         void playSoundViaBlutetooth(const string& data)
