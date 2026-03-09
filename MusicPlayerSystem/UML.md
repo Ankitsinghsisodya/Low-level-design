@@ -17,10 +17,10 @@ classDiagram
 
     class Playlist {
         -string playlistName
-        -vector~Song*~ songList
+        -vector songList
         +Playlist(playlistName)
         +getPlaylistName() string
-        +getSongs() vector~Song*~
+        +getSongs() vector
         +getSize() int
         +addSongToPlaylist(Song*)
     }
@@ -48,7 +48,7 @@ classDiagram
 
     class RandomPlayStrategy {
         -Playlist* currentPlaylist
-        -vector~int~ playedIndices
+        -vector playedIndices
         +setPlaylist(Playlist*)
         +next() Song*
         +hasNext() bool
@@ -58,7 +58,7 @@ classDiagram
 
     class CustomQueueStrategy {
         -Playlist* currentPlaylist
-        -queue~Song*~ customQueue
+        -queue customQueue
         -int currentIndex
         +setPlaylist(Playlist*)
         +next() Song*
@@ -140,7 +140,7 @@ classDiagram
     class PlaylistManager {
         <<Singleton>>
         -static PlaylistManager* instance
-        -map~string,Playlist*~ playlists
+        -map playlists
         +getInstance() PlaylistManager*
         +addPlaylist(Playlist*)
         +getPlaylist(string) Playlist*
